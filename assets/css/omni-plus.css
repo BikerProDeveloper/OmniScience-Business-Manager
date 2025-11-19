@@ -1,0 +1,77 @@
+﻿/* Omni PLUS Enhanced Styles */
+.mq-panel {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.payment-method {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.payment-method:hover {
+  border-color: rgba(109, 94, 252, 0.5);
+  transform: translateY(-2px);
+}
+
+.payment-method.selected {
+  border-color: #6d5efc;
+  background: rgba(109, 94, 252, 0.1);
+}
+
+.affiliate-link {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.affiliate-link:hover {
+  border-color: rgba(109, 94, 252, 0.5);
+  box-shadow: 0 8px 25px rgba(109, 94, 252, 0.15);
+}
+
+.revenue-progress {
+  background: linear-gradient(90deg, #6d5efc, #8b5cf6);
+  box-shadow: 0 2px 10px rgba(109, 94, 252, 0.3);
+}
+
+.file-item {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.file-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(5px);
+}
+
+.reminder-priority-high { border-left: 4px solid #ef4444; }
+.reminder-priority-medium { border-left: 4px solid #f59e0b; }
+.reminder-priority-low { border-left: 4px solid #10b981; }
+
+.api-status-online { color: #10b981; }
+.api-status-offline { color: #ef4444; }
+.api-status-pending { color: #f59e0b; }
+
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@media (max-width: 768px) {
+  .mq-panel {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+  
+  .payment-methods-grid {
+    grid-template-columns: 1fr;
+  }
+}
