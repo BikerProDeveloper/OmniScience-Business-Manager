@@ -1,37 +1,37 @@
-﻿exports.handler = async (event, context) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS'
-  };
+const fetch = require('node-fetch');
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
-  }
-
+exports.handler = async function(event, context) {
   try {
     const response = await fetch('https://api.netlify.com/api/v1/sites', {
+      method: 'GET',
       headers: {
-        'Authorization': \Bearer \\,
+        'Authorization': 'Bearer ' + process.env.NETLIFY_TOKEN,
         'Content-Type': 'application/json'
       }
     });
-
-    if (!response.ok) throw new Error('Netlify API error');
+    
+    if (!response.ok) {
+      throw new Error(`Netlify API error: ${response.status}`);
+    }
     
     const sites = await response.json();
     
     return {
       statusCode: 200,
-      headers,
-      body: JSON.stringify({ sites })
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({ sites: sites.slice(0, 5) }) // Return first 5 sites
     };
-
   } catch (error) {
-    return { 
-      statusCode: 500, 
-      headers,
-      body: JSON.stringify({ error: 'Failed to fetch Netlify sites' }) 
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({ error: error.message })
     };
   }
 };

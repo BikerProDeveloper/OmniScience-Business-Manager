@@ -1,57 +1,34 @@
-﻿const { Octokit } = require('@octokit/rest');
+const projects = [
+  {
+    id: 1,
+    name: "Website Redesign",
+    status: "in-progress",
+    progress: 65,
+    deadline: "2024-02-15"
+  },
+  {
+    id: 2, 
+    name: "Mobile App Development",
+    status: "planning",
+    progress: 20,
+    deadline: "2024-03-01"
+  },
+  {
+    id: 3,
+    name: "API Integration",
+    status: "completed", 
+    progress: 100,
+    deadline: "2024-01-20"
+  }
+];
 
-exports.handler = async (event, context) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
+exports.handler = async function(event, context) {
+  return {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    },
+    body: JSON.stringify(projects)
   };
-
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
-  }
-
-  try {
-    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-
-    if (event.httpMethod === 'POST') {
-      const { name, description, isPrivate = true } = JSON.parse(event.body);
-      
-      const repo = await octokit.repos.createForAuthenticatedUser({
-        name: name.toLowerCase().replace(/ /g, '-'),
-        description,
-        private: isPrivate,
-        auto_init: true
-      });
-
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ 
-          repo: repo.data, 
-          url: repo.data.html_url,
-          clone_url: repo.data.clone_url
-        })
-      };
-    }
-
-    const repos = await octokit.repos.listForAuthenticatedUser({
-      sort: 'updated',
-      per_page: 10
-    });
-
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ repos: repos.data })
-    };
-
-  } catch (error) {
-    console.error('GitHub error:', error);
-    return { 
-      statusCode: 500, 
-      headers,
-      body: JSON.stringify({ error: 'GitHub operation failed' }) 
-    };
-  }
 };

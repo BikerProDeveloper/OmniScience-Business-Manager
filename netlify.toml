@@ -1,18 +1,15 @@
-﻿[build]
+[build]
   publish = "."
-  command = "echo 'No build command'"
+  functions = "netlify/functions"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-[functions]
-  directory = "netlify/functions"
+# Environment variables for development
+[build.environment]
+  NODE_VERSION = "18"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
+[functions]
+  node_bundler = "esbuild"

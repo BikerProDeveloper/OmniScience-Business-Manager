@@ -1,25 +1,8 @@
-﻿{
+{
   "name": "omni-science-business-manager",
   "version": "1.0.0",
-  "description": "Complete business management platform with AI-powered features",
-  "main": "index.html",
-  "scripts": {
-    "dev": "live-server --port=3000",
-    "build": "echo 'No build process needed'",
-    "deploy": "echo 'Deploy to Netlify via GitHub'"
-  },
-  "keywords": [
-    "business",
-    "management",
-    "crm",
-    "projects",
-    "ai",
-    "portfolio",
-    "netlify"
-  ],
-  "author": "Your Name",
-  "license": "MIT",
-  "devDependencies": {
-    "live-server": "^1.2.2"
+  "description": "Business management platform",
+  "type": "commonjs",
+  "dependencies": {
   }
 }
